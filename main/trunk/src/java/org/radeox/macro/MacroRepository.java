@@ -34,9 +34,7 @@ import java.util.*;
 
 public class MacroRepository extends PluginRepository {
   private static Log log = LogFactory.getLog(MacroRepository.class);
-
-  private InitialRenderContext context;
-
+  
   protected static MacroRepository instance;
   protected List loaders;
 
@@ -57,7 +55,6 @@ public class MacroRepository extends PluginRepository {
   }
 
   public void setInitialContext(InitialRenderContext context) {
-    this.context = context;
     initialize(context);
   }
 

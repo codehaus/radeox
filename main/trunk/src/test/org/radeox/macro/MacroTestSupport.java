@@ -17,7 +17,7 @@
  */
 
 
-package org.radeox.test.macro;
+package org.radeox.macro;
 
 import junit.framework.TestCase;
 import org.radeox.engine.context.BaseRenderContext;

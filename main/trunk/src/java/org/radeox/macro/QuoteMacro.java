@@ -50,24 +50,30 @@ public class QuoteMacro extends LocalePreserved {
 
     writer.write("<blockquote class=\"quote\">");
     writer.write(params.getContent());
-    String source;
+    String sourceDesc;
     try {
-      source = ResourceManager.getString((String) initialContext.get(RenderContext.LANGUAGE_BUNDLE_NAME),
+      sourceDesc = ResourceManager.getString((String) initialContext.get(RenderContext.LANGUAGE_BUNDLE_NAME),
                                          getLocaleKey() + ".source");
     } catch (Exception e) {
       log.warn("missing value for " + getLocaleKey() + ".source");
-      source = "Source";
+      sourceDesc = "Source";
     }
 
-    if (params.getLength() == 2) {
-      source = params.get(1);
-    }
-    // if more than one was present, we
-    // should show a description for the link
     if (params.getLength() > 0) {
-      writer.write("<a href=\"" + params.get(0) + "\">");
-      writer.write(source);
-      writer.write("</a>");
+      String source = params.get(0);
+      boolean isLink = source.toLowerCase().startsWith("http://");  
+        
+      if (params.getLength() == 2) {
+        sourceDesc = params.get(1);
+      }
+        
+      if (isLink) {
+        writer.write("<br><a href=\""+source+"\">");
+        writer.write(sourceDesc);
+        writer.write("</a>");
+      } else {
+        writer.write("<br><b>"+source+"</b>");
+      }
     }
     writer.write("</blockquote>");
     return;

@@ -16,14 +16,12 @@
  *  limitations under the License.
  */
 
-package org.radeox.test;
+package org.radeox;
 
 import com.clarkware.junitperf.TimedTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.engine.BaseRenderEngine;
 import org.radeox.engine.context.BaseRenderContext;
@@ -34,12 +32,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class PerformanceTests {
-  private static Log log = LogFactory.getLog(PerformanceTests.class);
-
   public static void main(String[] args) throws IOException {
     TestRunner.run(suite());
   }
-
 
   public static Test suite() throws IOException {
     // get test markup from text file

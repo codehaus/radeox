@@ -16,12 +16,11 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.regex;
+package org.radeox.regex;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.radeox.regex.*;
 
 public class OroMatcherTest extends TestCase {
 

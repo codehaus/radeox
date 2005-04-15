@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.macro;
+package org.radeox.macro;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

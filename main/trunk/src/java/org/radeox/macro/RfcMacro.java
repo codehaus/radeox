@@ -61,8 +61,7 @@ public class RfcMacro extends BaseLocaleMacro {
   public void appendRfc(Writer writer, String number, String view) throws IOException, IllegalArgumentException {
     //writer.write("<a href=\"ftp://ftp.rfc-editor.org/in-notes/rfc");
     try {
-
-      Integer dummy = Integer.getInteger(number);
+      Integer.getInteger(number);
     } catch (Exception e) {
       throw new IllegalArgumentException();
     }

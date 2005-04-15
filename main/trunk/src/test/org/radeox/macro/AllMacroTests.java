@@ -17,12 +17,13 @@
  */
 
 
-package org.radeox.test.macro;
+package org.radeox.macro;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.radeox.test.macro.code.AllCodeMacroTests;
+
+import org.radeox.macro.code.AllCodeMacroTests;
 
 public class AllMacroTests extends TestCase {
   public AllMacroTests(String name) {

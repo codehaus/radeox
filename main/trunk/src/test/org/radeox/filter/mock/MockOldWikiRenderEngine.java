@@ -17,7 +17,7 @@
  */
 
 
-package org.radeox.test.filter.mock;
+package org.radeox.filter.mock;
 
 import org.radeox.api.engine.context.InitialRenderContext;
 

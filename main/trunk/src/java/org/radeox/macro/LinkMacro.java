@@ -21,7 +21,6 @@ package org.radeox.macro;
 import org.radeox.api.engine.ImageRenderEngine;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.context.RenderContext;
-import org.radeox.filter.EscapeFilter;
 import org.radeox.macro.parameter.MacroParameter;
 import org.radeox.util.Encoder;
 

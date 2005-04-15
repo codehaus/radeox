@@ -27,7 +27,6 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /*
  * MacroListMacro displays a list of all known macros of the EngineManager

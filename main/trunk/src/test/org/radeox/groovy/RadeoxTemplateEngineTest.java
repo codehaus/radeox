@@ -16,20 +16,40 @@
  *  limitations under the License.
  */
 
-package radeox.test.groovy;
 
-import junit.framework.Test;
+package org.radeox.groovy;
+
+import groovy.text.Template;
+import groovy.text.TemplateEngine;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-public class AllGroovyTests extends TestCase {
-  public AllGroovyTests(String name) {
+import java.util.HashMap;
+import java.util.Map;
+
+import org.radeox.example.RadeoxTemplateEngine;
+
+public class RadeoxTemplateEngineTest extends TestCase {
+
+  public RadeoxTemplateEngineTest(String name) {
     super(name);
   }
 
-  public static Test suite() {
-    TestSuite s = new TestSuite();
-    s.addTestSuite(RadeoxTemplateEngineTest.class);
-    return s;
+  public void testRadeoxTemplate() {
+    String text = "__Dear__ ${firstname}";
+
+    Map binding = new HashMap();
+    binding.put("firstname", "stephan");
+
+    TemplateEngine engine = new RadeoxTemplateEngine();
+    Template template = null;
+    try {
+      template = engine.createTemplate(text);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    template.setBinding(binding);
+
+    String result = "<b class=\"bold\">Dear</b> stephan";
+    assertEquals(result, template.toString());
   }
 }

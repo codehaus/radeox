@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package org.radeox.test;
+package org.radeox;
 
 import junit.framework.TestCase;
 import org.radeox.api.engine.RenderEngine;

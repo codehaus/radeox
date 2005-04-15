@@ -17,9 +17,8 @@
  */
 
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
-import junit.framework.TestCase;
 import org.radeox.engine.context.BaseInitialRenderContext;
 import org.radeox.engine.context.BaseRenderContext;
 import org.radeox.filter.Filter;

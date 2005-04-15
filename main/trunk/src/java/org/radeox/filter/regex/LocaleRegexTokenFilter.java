@@ -19,8 +19,6 @@
 
 package org.radeox.filter.regex;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.radeox.api.engine.context.InitialRenderContext;
 import org.radeox.api.engine.context.RenderContext;
 
@@ -37,7 +35,6 @@ import java.util.ResourceBundle;
  */
 
 public abstract class LocaleRegexTokenFilter extends RegexTokenFilter  {
-  private static Log log = LogFactory.getLog(LocaleRegexTokenFilter.class);
   protected ResourceBundle inputMessages;
   protected ResourceBundle outputMessages;
 

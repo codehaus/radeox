@@ -34,8 +34,6 @@ public class StringBufferWriter extends Writer {
 
   private StringBuffer buffer;
 
-  private boolean closed = false;
-
   public StringBufferWriter(StringBuffer buffer) {
     this.buffer = buffer;
     this.lock = buffer;
@@ -89,7 +87,5 @@ public class StringBufferWriter extends Writer {
   }
 
   public void close() throws IOException {
-    closed = true;
   }
-
 }

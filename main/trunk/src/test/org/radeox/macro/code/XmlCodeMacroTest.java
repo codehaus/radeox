@@ -16,13 +16,13 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.macro.code;
+package org.radeox.macro.code;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.engine.BaseRenderEngine;
-import org.radeox.test.macro.MacroTestSupport;
+import org.radeox.macro.MacroTestSupport;
 
 public class XmlCodeMacroTest extends MacroTestSupport {
   final String S_CODE = "<div class=\"code\"><pre>";

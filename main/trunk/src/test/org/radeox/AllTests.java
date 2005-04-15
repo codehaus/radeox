@@ -16,15 +16,16 @@
  *  limitations under the License.
  */
 
-package org.radeox.test;
+package org.radeox;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.radeox.test.filter.AllFilterTests;
-import org.radeox.test.macro.AllMacroTests;
-import org.radeox.test.regex.AllRegexTests;
-import radeox.test.groovy.AllGroovyTests;
+
+import org.radeox.filter.AllFilterTests;
+import org.radeox.groovy.AllGroovyTests;
+import org.radeox.macro.AllMacroTests;
+import org.radeox.regex.AllRegexTests;
 
 public class AllTests extends TestCase {
   public AllTests(String name) {

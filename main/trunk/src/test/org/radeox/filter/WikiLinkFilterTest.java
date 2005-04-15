@@ -16,21 +16,18 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.radeox.api.engine.RenderEngine;
 import org.radeox.filter.WikiLinkFilter;
-import org.radeox.test.filter.mock.MockOldWikiRenderEngine;
+import org.radeox.filter.mock.MockOldWikiRenderEngine;
 
 public class WikiLinkFilterTest extends FilterTestSupport {
 
   protected void setUp() throws Exception {
     filter = new WikiLinkFilter();
-    context.getRenderContext().setRenderEngine((RenderEngine)
-        new MockOldWikiRenderEngine()
-    );
+    context.getRenderContext().setRenderEngine(new MockOldWikiRenderEngine());
     super.setUp();
   }
 

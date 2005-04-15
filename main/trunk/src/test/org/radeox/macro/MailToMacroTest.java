@@ -1,4 +1,4 @@
-package org.radeox.test.macro;
+package org.radeox.macro;
 
 /*
  *      Copyright 2001-2004 Fraunhofer Gesellschaft, Munich, Germany, for its 

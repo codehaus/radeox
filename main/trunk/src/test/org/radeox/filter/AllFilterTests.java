@@ -17,7 +17,7 @@
  */
 
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

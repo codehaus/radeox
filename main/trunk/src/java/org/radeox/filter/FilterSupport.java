@@ -20,7 +20,6 @@
 package org.radeox.filter;
 
 import org.radeox.api.engine.context.InitialRenderContext;
-import org.radeox.filter.context.FilterContext;
 
 /*
  * Abstract Filter Class that supplies the

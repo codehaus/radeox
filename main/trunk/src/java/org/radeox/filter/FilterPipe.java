@@ -16,7 +16,6 @@
  *  limitations under the License.
  */
 
-
 package org.radeox.filter;
 
 import org.apache.commons.logging.Log;
@@ -50,8 +49,6 @@ public class FilterPipe {
 
   private List activeFilters = null;
   private Set inactiveFilters = null;
-
-  private static Object[] noArguments = new Object[]{};
 
   public FilterPipe() {
     this(new BaseInitialRenderContext());
@@ -142,8 +139,6 @@ public class FilterPipe {
       activeFilters.add(0, filter);
     } else if (minIndex != -1) {
       activeFilters.add(minIndex, filter);
-//    } else if (contains(filter.before(), LAST_IN_PIPE)) {
-//      activeFilters.add(-1, filter);
     } else {
       activeFilters.add(filter);
     }
@@ -192,7 +187,6 @@ public class FilterPipe {
         } else {
           renderContext.setCacheable(false);
         }
-//        System.out.println("APPLYING FILTER: "+f);
         String tmp = f.filter(output, context);
         if (output.equals(tmp)) {
           renderContext.setCacheable(true);

@@ -16,13 +16,13 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.radeox.api.engine.context.RenderContext;
 import org.radeox.filter.LinkTestFilter;
-import org.radeox.test.filter.mock.MockWikiRenderEngine;
+import org.radeox.filter.mock.MockWikiRenderEngine;
 
 public class LinkTestFilterTest extends FilterTestSupport {
 

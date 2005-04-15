@@ -52,10 +52,6 @@ public class Table {
     functions = FunctionRepository.getInstance();
   }
 
-  private void addFunction(Function function) {
-    functions.put(function.getName().toLowerCase(), function);
-  }
-
   public Object getXY(int x, int y) {
     // perhaps move everything to a twodim array first
     return ((List) rows.get(y)).get(x);

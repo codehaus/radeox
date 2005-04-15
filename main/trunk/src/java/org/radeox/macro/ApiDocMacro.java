@@ -16,12 +16,8 @@
  *  limitations under the License.
  */
 
-
 package org.radeox.macro;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.radeox.macro.api.ApiDoc;
 import org.radeox.macro.parameter.MacroParameter;
 
@@ -38,8 +34,6 @@ import java.io.Writer;
  */
 
 public class ApiDocMacro extends BaseLocaleMacro {
-  private static Log log = LogFactory.getLog(ApiDocMacro.class);
-
   public String getLocaleKey() {
     return "macro.apidocs";
   }

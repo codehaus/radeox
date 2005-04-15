@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package org.radeox.test;
+package org.radeox;
 
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.context.RenderContext;
@@ -24,16 +24,9 @@ import org.radeox.engine.BaseRenderEngine;
 import org.radeox.engine.context.BaseRenderContext;
 
 import java.io.*;
-import java.util.Date;
 
 public class RegexpTest {
   public static void main(String[] args) {
-    //System.out.print("Press enter ...");
-//    try {
-//      new BufferedReader(new InputStreamReader(System.in)).readLine();
-//    } catch (IOException e) {
-//      // ignore errors
-//    }
 
     String file = args.length > 0 ? args[0] : "conf/wiki.txt";
     try {

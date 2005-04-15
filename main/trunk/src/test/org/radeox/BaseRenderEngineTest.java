@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package org.radeox.test;
+package org.radeox;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -25,7 +25,7 @@ import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.context.RenderContext;
 import org.radeox.engine.BaseRenderEngine;
 import org.radeox.engine.context.BaseRenderContext;
-import org.radeox.test.filter.mock.MockWikiRenderEngine;
+import org.radeox.filter.mock.MockWikiRenderEngine;
 
 import java.io.IOException;
 import java.io.StringWriter;

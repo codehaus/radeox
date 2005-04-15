@@ -1,4 +1,4 @@
-package org.radeox.test.filter.mock;
+package org.radeox.filter.mock;
 
 import org.radeox.api.engine.context.InitialRenderContext;
 import org.radeox.filter.Filter;
@@ -10,7 +10,7 @@ public class MockReplacesFilter implements Filter {
   }
 
   public String[] replaces() {
-    return new String[] { "org.radeox.test.filter.mock.MockReplacedFilter" };
+    return new String[] { MockReplacedFilter.class.getName() };
   }
 
   public void setInitialContext(InitialRenderContext context) {

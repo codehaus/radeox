@@ -28,13 +28,15 @@ package org.radeox.macro.code;
 
 public class XmlCodeFilter extends DefaultRegexCodeFormatter implements SourceCodeFormatter {
   private static final String KEYWORDS = "\\b(xsl:[^&\\s]*)\\b";
-  private static final String TAGS = "(&#60;/?.*?&#62;)";
+  private static final String TAGS = "(&#60;/?[^!0-9].*?&#62;)";
   private static final String QUOTE = "\"(([^\"\\\\]|\\.)*)\"";
+  private static final String COMMENT = "(&#60;!--.*--&#62;)";
 
   public XmlCodeFilter() {
     super(QUOTE, "<span class=\"xml-quote\">\"$1\"</span>");
     addRegex(TAGS, "<span class=\"xml-tag\">$1</span>");
     addRegex(KEYWORDS, "<span class=\"xml-keyword\">$1</span>");
+    addRegex(COMMENT, "<span class=\"xml-comment\">$1</span>");
   }
 
   public String getName() {

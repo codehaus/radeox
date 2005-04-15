@@ -34,7 +34,6 @@ import org.radeox.macro.parameter.MacroParameter;
 import org.radeox.util.StringBufferWriter;
 
 import java.io.Writer;
-import java.util.Map;
 
 /*
  * Class that finds snippets (macros) like

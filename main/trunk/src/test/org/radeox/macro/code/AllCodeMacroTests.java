@@ -17,7 +17,7 @@
  */
 
 
-package org.radeox.test.macro.code;
+package org.radeox.macro.code;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -31,6 +31,7 @@ public class AllCodeMacroTests extends TestCase {
   public static Test suite() {
     TestSuite s = new TestSuite();
     s.addTestSuite(XmlCodeMacroTest.class);
+    s.addTestSuite(SqlCodeMacroTest.class);
     return s;
   }
 }

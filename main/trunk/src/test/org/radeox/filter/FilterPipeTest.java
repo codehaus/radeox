@@ -16,20 +16,17 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.radeox.api.engine.context.InitialRenderContext;
 import org.radeox.filter.Filter;
 import org.radeox.filter.FilterPipe;
 import org.radeox.filter.context.FilterContext;
 import org.radeox.filter.context.BaseFilterContext;
-import org.radeox.test.filter.mock.MockReplacedFilter;
-import org.radeox.test.filter.mock.MockReplacesFilter;
-import org.radeox.engine.context.BaseRenderContext;
-import org.jmock.MockObjectTestCase;
+import org.radeox.filter.mock.MockReplacedFilter;
+import org.radeox.filter.mock.MockReplacesFilter;
 import org.jmock.Mock;
 
 public class FilterPipeTest extends FilterTestSupport {
@@ -76,7 +73,7 @@ public class FilterPipeTest extends FilterTestSupport {
     Mock mockFilter = mock(Filter.class);
      mockFilter.expects(atLeastOnce()).method("setInitialContext");
      mockFilter.expects(atLeastOnce()).method("before").will(returnValue(new String[]{}));
-     mockFilter.expects(atLeastOnce()).method("filter");
+     mockFilter.expects(atLeastOnce()).method("filter").will(returnValue("executed"));
 
     Filter filter = (Filter) mockFilter.proxy();
 
@@ -84,9 +81,9 @@ public class FilterPipeTest extends FilterTestSupport {
     fp.deactivateFilter(filter.getClass().getName());
     fp.activateFilter(filter.getClass().getName());
 
-    fp.filter("test", context );
-    System.out.println("Active:   "+fp.getAllFilters());
-    System.out.println("Inactive: "+fp.getInactiveFilters());
+    assertEquals("executed", fp.filter("test", context));
+    assertTrue(fp.getInactiveFilters().isEmpty());
+    assertEquals("[mockFilter]",fp.getAllFilters().toString());
   }
 
    public void testDeactivatedFilterIsNotUsed() {
@@ -164,7 +161,7 @@ public class FilterPipeTest extends FilterTestSupport {
 
     fp.init();
 
-    assertTrue("MockReplacedFilter is removed from FilterPipe", -1 == fp.index("org.radeox.test.filter.mock.MockReplacedFilter"));
-    assertTrue("MockReplacesFilter is not removed from FilterPipe", -1 != fp.index("org.radeox.test.filter.mock.MockReplacesFilter"));
+    assertTrue("MockReplacedFilter is removed from FilterPipe", -1 == fp.index(MockReplacedFilter.class.getName()));
+    assertTrue("MockReplacesFilter is not removed from FilterPipe", -1 != fp.index(MockReplacesFilter.class.getName()));
   }
 }

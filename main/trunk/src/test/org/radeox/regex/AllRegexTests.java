@@ -17,7 +17,7 @@
  */
 
 
-package org.radeox.test.regex;
+package org.radeox.regex;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

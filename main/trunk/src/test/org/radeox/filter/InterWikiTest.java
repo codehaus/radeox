@@ -16,15 +16,14 @@
  *  limitations under the License.
  */
 
-package org.radeox.test.filter;
+package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.context.RenderContext;
 import org.radeox.filter.LinkTestFilter;
 import org.radeox.filter.interwiki.InterWiki;
-import org.radeox.test.filter.mock.MockInterWikiRenderEngine;
+import org.radeox.filter.mock.MockInterWikiRenderEngine;
 
 import java.io.StringWriter;
 import java.io.IOException;
@@ -33,9 +32,7 @@ public class InterWikiTest extends FilterTestSupport {
 
   protected void setUp() throws Exception {
     filter = new LinkTestFilter();
-    context.getRenderContext().setRenderEngine((RenderEngine)
-        new MockInterWikiRenderEngine()
-    );
+    context.getRenderContext().setRenderEngine(new MockInterWikiRenderEngine());
     super.setUp();
   }
 
