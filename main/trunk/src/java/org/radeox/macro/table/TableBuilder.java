@@ -35,6 +35,14 @@ public class TableBuilder {
     String lastToken = null;
     while (tokenizer.hasMoreTokens()) {
       String token = tokenizer.nextToken();
+      String linkToken = "";
+      if(token.indexOf('[') != -1 && token.indexOf(']') == -1) {
+	while(token.indexOf(']') == -1 && tokenizer.hasMoreTokens()) {
+	  linkToken += token;
+	  token = tokenizer.nextToken();
+	}
+	token = linkToken + token;
+      }
       if ("\n".equals(token)) {
         // Handles "\n" - "|\n"
         if (null == lastToken || "|".equals(lastToken)) {
