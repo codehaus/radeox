@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -15,7 +17,7 @@ import java.util.List;
 /**
  * After the Service class from Sun and the Apache project.
  * With help from Frédéric Miserey.
- *
+ * <p/>
  * credits Frédéric Miserey, Joseph Oettinger
  *
  * @author Matthias L. Jugel
@@ -60,6 +62,7 @@ public class Service {
     services.put(providerFile, providers);
 
     try {
+      // get all files with the name providerFile out of all jar files
       Enumeration providerFiles = classLoader.getResources(providerFile);
 
       if (providerFiles.hasMoreElements()) {
@@ -113,25 +116,6 @@ public class Service {
     }
   }
 
-  private static void loadInstances(Reader input, ClassLoader classLoader, List providers) throws IOException {
-    List classes = new ArrayList();
-    loadClasses(input, classLoader, classes);
-    Iterator iterator = classes.iterator();
-    while (iterator.hasNext()) {
-      Class klass = (Class) iterator.next();
-      try {
-        Object obj = klass.newInstance();
-        // stick it into our vector...
-        providers.add(obj);
-      } catch (InstantiationException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-      //Logger.debug("Service: loaded "+ obj.getClass().getName());
-    }
-  }
-
   private static void loadClasses(Reader input, ClassLoader classLoader, List classes) throws IOException {
     Iterator classesIt = readLines(input).iterator();
     while (classesIt.hasNext()) {
@@ -141,6 +125,42 @@ public class Service {
       } catch (ClassNotFoundException e) {
         // ignore silently
       }
+    }
+  }
+
+  private static void loadInstances(Reader input, ClassLoader classLoader, List providers) throws IOException {
+    Iterator classesIt = readLines(input).iterator();
+    while (classesIt.hasNext()) {
+      String className = (String) classesIt.next();
+      int modifierIndex = className.indexOf('_');
+      String modifier = null;
+      if (modifierIndex != -1) {
+        modifier = className.substring(modifierIndex + 1);
+        className = className.substring(0, modifierIndex);
+      }
+
+      try {
+        Class klass = classLoader.loadClass(className);
+        Object obj = klass.newInstance();
+        if (null != modifier) {
+          Method setModifierMethod = klass.getMethod("setModifier", new Class[]{String.class});
+          setModifierMethod.invoke(obj, new Object[]{modifier});
+//          System.out.println("Loading modified version of '"+className+"' ("+modifier+")");
+        }
+        // stick it into our vector...
+        providers.add(obj);
+      } catch (NoSuchMethodException e) {
+        // ignore silently
+      } catch (InvocationTargetException e) {
+        // ignore silently
+      } catch (ClassNotFoundException e) {
+        // ignore silently
+      } catch (InstantiationException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+      //Logger.debug("Service: loaded "+ obj.getClass().getName());
     }
   }
 

@@ -21,7 +21,6 @@ package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.radeox.filter.ItalicFilter;
 
 public class ItalicFilterTest extends FilterTestSupport {
   protected void setUp() throws Exception {
@@ -36,4 +35,9 @@ public class ItalicFilterTest extends FilterTestSupport {
   public void testItalic() {
     assertEquals("<i class=\"italic\">Text</i>", filter.filter("~~Text~~", context));
   }
+
+  public void testItalicCreole() {
+    assertEquals("<i class=\"italic\">Text</i>", filterCreole.filter("//Text//", context));
+  }
+
 }

@@ -20,11 +20,14 @@ package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.radeox.filter.BoldFilter;
 
 public class BoldFilterTest extends FilterTestSupport {
+  private static final String RESULT_BOLD_1 = "<b class=\"bold\">Text</b>";
+  private static final String RESULT_NOSPACE_UNDERLINE = "Test__Text__Test";
+  private static final String RESULT_NOSPACE_STAR = "Test**Text**Test";
+  private static final String RESULT_PUNCT = "<b class=\"bold\">Text</b>:";
 
-   protected void setUp() throws Exception {
+  protected void setUp() throws Exception {
     filter = new BoldFilter();
     super.setUp();
   }
@@ -34,14 +37,26 @@ public class BoldFilterTest extends FilterTestSupport {
   }
 
   public void testBold() {
-    assertEquals("<b class=\"bold\">Text</b>", filter.filter("__Text__", context));
+    assertEquals(RESULT_BOLD_1, filter.filter("__Text__", context));
+  }
+
+  public void testBoldCreole() {
+    assertEquals(RESULT_BOLD_1, filterCreole.filter("**Text**", context));
   }
 
   public void testBoldMustStartAndEndWithSpace() {
-    assertEquals("Test__Text__Test", filter.filter("Test__Text__Test", context));
+    assertEquals(RESULT_NOSPACE_UNDERLINE, filter.filter(RESULT_NOSPACE_UNDERLINE, context));
+  }
+
+  public void testBoldMustStartAndEndWithSpaceCreole() {
+    assertEquals(RESULT_NOSPACE_STAR, filterCreole.filter(RESULT_NOSPACE_STAR, context));
   }
 
   public void testBoldWithPunctuation() {
-    assertEquals("<b class=\"bold\">Text</b>:", filter.filter("__Text__:", context));
+    assertEquals(RESULT_PUNCT, filter.filter("__Text__:", context));
+  }
+
+  public void testBoldWithPunctuationCreole() {
+    assertEquals(RESULT_PUNCT, filterCreole.filter("**Text**:", context));
   }
 }

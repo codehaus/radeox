@@ -19,10 +19,10 @@
 
 package org.radeox.filter;
 
+import org.radeox.api.engine.context.InitialRenderContext;
 import org.radeox.filter.context.FilterContext;
 import org.radeox.filter.regex.LocaleRegexTokenFilter;
 import org.radeox.regex.MatchResult;
-import org.radeox.api.engine.context.InitialRenderContext;
 
 import java.text.MessageFormat;
 
@@ -50,12 +50,16 @@ public class HeadingFilter extends LocaleRegexTokenFilter implements CacheFilter
 
   public void setInitialContext(InitialRenderContext context) {
     super.setInitialContext(context);
-    String outputTemplate = outputMessages.getString(getLocaleKey()+".print");
+    String outputTemplate = outputMessages.getString(getLocaleKey() + ".print");
     formatter = new MessageFormat("");
     formatter.applyPattern(outputTemplate);
- }
+  }
 
   public String handleMatch(MatchResult result, FilterContext context) {
-    return formatter.format(new Object[]{result.group(1).replace('.', '-'), result.group(3)});
+    String match = result.group(1);
+    match = match.replaceAll("\\.", "");
+    match = match.replaceAll(".", "1-");
+    match = match.substring(0, match.length() - 1);
+    return formatter.format(new Object[]{match, result.group(3)});
   }
 }

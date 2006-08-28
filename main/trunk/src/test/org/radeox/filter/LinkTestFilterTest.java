@@ -21,10 +21,16 @@ package org.radeox.filter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.radeox.api.engine.context.RenderContext;
-import org.radeox.filter.LinkTestFilter;
 import org.radeox.filter.mock.MockWikiRenderEngine;
 
 public class LinkTestFilterTest extends FilterTestSupport {
+  private static final String RESULT_URL = "<div class=\"error\">Do not surround URLs with [...].</div>";
+  private static final String RESULT_CREATE = "'Roller' - 'Roller'";
+  private static final String RESULT_LINK = "link:SnipSnap|SnipSnap";
+  private static final String RESULT_LINK_LOWER = "link:stephan|stephan";
+  private static final String RESULT_LINK_ALIAS = "link:stephan|alias";
+  private static final String RESULT_LINK_ALIAS_ANCHOR = "link:stephan|alias#hash";
+  private static final String RESULT_ESCAPED = "'<link>' - '&#60;link&#62;'";
 
   protected void setUp() throws Exception {
     filter = new LinkTestFilter();
@@ -37,32 +43,56 @@ public class LinkTestFilterTest extends FilterTestSupport {
   }
 
   public void testUrlInLink() {
-    assertEquals("Url is reported", "<div class=\"error\">Do not surround URLs with [...].</div>", filter.filter("[http://radeox.org]",context));
+    assertEquals("Url is reported", RESULT_URL, filter.filter("[http://radeox.org]", context));
   }
+
+  public void testUrlInLinkCreole() {
+    assertEquals("Url is reported", RESULT_URL, filterCreole.filter("[[http://radeox.org]]", context));
+  }
+
   public void testCreate() {
-    assertEquals("'Roller' - 'Roller'", filter.filter("[Roller]", context));
+    assertEquals(RESULT_CREATE, filter.filter("[Roller]", context));
+  }
+
+  public void testCreateCreole() {
+    assertEquals(RESULT_CREATE, filterCreole.filter("[[Roller]]", context));
   }
 
   public void testLink() {
-    assertEquals("link:SnipSnap|SnipSnap", filter.filter("[SnipSnap]", context));
+    assertEquals(RESULT_LINK, filter.filter("[SnipSnap]", context));
+  }
+
+  public void testLinkCreole() {
+    assertEquals(RESULT_LINK, filterCreole.filter("[[SnipSnap]]", context));
   }
 
   public void testLinkLower() {
-    assertEquals("link:stephan|stephan", filter.filter("[stephan]", context));
+    assertEquals(RESULT_LINK_LOWER, filter.filter("[stephan]", context));
+  }
+
+  public void testLinkLowerCreole() {
+    assertEquals(RESULT_LINK_LOWER, filterCreole.filter("[[stephan]]", context));
   }
 
   public void testLinkAlias() {
-    assertEquals("link:stephan|alias", filter.filter("[alias|stephan]", context));
+    assertEquals(RESULT_LINK_ALIAS, filter.filter("[alias|stephan]", context));
+  }
+
+  public void testLinkAliasCreole() {
+    assertEquals(RESULT_LINK_ALIAS, filterCreole.filter("[[stephan|alias]]", context));
   }
 
   public void testLinkAliasAnchor() {
-    assertEquals("link:stephan|alias#hash", filter.filter("[alias|stephan#hash]", context));
+    assertEquals(RESULT_LINK_ALIAS_ANCHOR, filter.filter("[alias|stephan#hash]", context));
+  }
+
+  public void testLinkAliasAnchorCreole() {
+    assertEquals(RESULT_LINK_ALIAS_ANCHOR, filterCreole.filter("[[stephan#hash|alias]]", context));
   }
 
   public void testLinkAliasAnchorType() {
-    assertEquals("link:stephan|alias#hash", filter.filter("[alias|type:stephan#hash]", context));
+    assertEquals(RESULT_LINK_ALIAS_ANCHOR, filter.filter("[alias|type:stephan#hash]", context));
   }
-
 
   public void testLinkCacheable() {
     RenderContext renderContext = context.getRenderContext();
@@ -81,6 +111,11 @@ public class LinkTestFilterTest extends FilterTestSupport {
   }
 
   public void testLinksWithEscapedChars() {
-    assertEquals("'<link>' - '&#60;link&#62;'", filter.filter("[<link>]", context));
+    assertEquals(RESULT_ESCAPED, filter.filter("[<link>]", context));
   }
+
+  public void testLinksWithEscapedCharsCreole() {
+    assertEquals(RESULT_ESCAPED, filterCreole.filter("[[<link>]]", context));
+  }
+
 }

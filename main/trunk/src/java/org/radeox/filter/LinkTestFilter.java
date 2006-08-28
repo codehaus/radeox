@@ -51,7 +51,7 @@ public class LinkTestFilter extends LocaleRegexTokenFilter {
    * The regular expression for detecting WikiLinks.
    * Overwrite in subclass to support other link styles like
    * OldAndUglyWikiLinking :-)
-   *
+   * <p/>
    * /[A-Z][a-z]+([A-Z][a-z]+)+/
    * wikiPattern = "\\[(.*?)\\]";
    */
@@ -88,18 +88,23 @@ public class LinkTestFilter extends LocaleRegexTokenFilter {
 
         // Is there an alias like [alias|link] ?
         int pipeIndex = name.indexOf('|');
-        String alias ="";
+        String alias = "";
         if (-1 != pipeIndex) {
-          alias = name.substring(0, pipeIndex);
-          name = name.substring(pipeIndex + 1);
+          if (null == getModifier()) {
+            alias = name.substring(0, pipeIndex);
+            name = name.substring(pipeIndex + 1);
+          } else {
+            alias = name.substring(pipeIndex + 1);
+            name = name.substring(0, pipeIndex);
+          }
         }
 
         int hashIndex = name.lastIndexOf('#');
 
         String hash = "";
-        if (-1 != hashIndex && hashIndex != name.length() -1) {
-           hash = name.substring(hashIndex + 1);
-           name = name.substring(0, hashIndex);
+        if (-1 != hashIndex && hashIndex != name.length() - 1) {
+          hash = name.substring(hashIndex + 1);
+          name = name.substring(0, hashIndex);
         }
 
         int colonIndex = name.indexOf(':');
@@ -145,8 +150,8 @@ public class LinkTestFilter extends LocaleRegexTokenFilter {
               view = alias;
             }
             // Do not add hash if an alias was given
-            if (-1 != hashIndex ) {
-               wikiEngine.appendLink(buffer, name, view, hash);
+            if (-1 != hashIndex) {
+              wikiEngine.appendLink(buffer, name, view, hash);
             } else {
               wikiEngine.appendLink(buffer, name, view);
             }

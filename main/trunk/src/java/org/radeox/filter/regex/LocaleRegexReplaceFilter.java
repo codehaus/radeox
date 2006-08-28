@@ -35,7 +35,17 @@ import java.util.ResourceBundle;
  */
 
 public abstract class LocaleRegexReplaceFilter extends RegexReplaceFilter {
+  private String modifier = null;
+
   protected abstract String getLocaleKey();
+
+  public void setModifier(String modifier) {
+    this.modifier = modifier;
+  }
+
+  public String getModifier() {
+    return modifier;
+  }
 
   protected boolean isSingleLine() {
     return false;
@@ -57,12 +67,16 @@ public abstract class LocaleRegexReplaceFilter extends RegexReplaceFilter {
     super.setInitialContext(context);
     clearRegex();
 
-    ResourceBundle outputMessages =  getOutputBundle();
+    ResourceBundle outputMessages = getOutputBundle();
     ResourceBundle inputMessages = getInputBundle();
 
-    String match = inputMessages.getString(getLocaleKey()+".match");
-    String print = outputMessages.getString(getLocaleKey()+".print");
+    String match = inputMessages.getString(getLocaleKey() + (modifier != null ? "." + modifier : "") + ".match");
+    String print = outputMessages.getString(getLocaleKey() + (modifier != null ? "." + modifier : "") + ".print");
     //System.err.println(getLocaleKey()+": match="+match+" pattern="+print);
     addRegex(match, print, isSingleLine() ? RegexReplaceFilter.SINGLELINE : RegexReplaceFilter.MULTILINE);
+  }
+
+  private String getKeyModifier() {
+    return modifier;
   }
 }

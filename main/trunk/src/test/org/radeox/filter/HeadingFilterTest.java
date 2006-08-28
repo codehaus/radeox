@@ -20,9 +20,13 @@ package org.radeox.filter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.radeox.filter.HeadingFilter;
 
 public class HeadingFilterTest extends FilterTestSupport {
+  private static final String RESULT_HEADING_1 = "<h3 class=\"heading-1\">Test</h3>";
+  private static final String RESULT_SUB_HEADINGS = "<h3 class=\"heading-1\">Test</h3>\n" +
+          "<h3 class=\"heading-1-1\">Test</h3>\n" +
+          "<h3 class=\"heading-1-1-1\">Test</h3>\n" +
+          RESULT_HEADING_1;
 
   protected void setUp() throws Exception {
     filter = new HeadingFilter();
@@ -34,13 +38,26 @@ public class HeadingFilterTest extends FilterTestSupport {
   }
 
   public void testHeading() {
-    assertEquals("<h3 class=\"heading-1\">Test</h3>", filter.filter("1 Test", context));
+    assertEquals(RESULT_HEADING_1, filter.filter("1 Test", context));
+  }
+
+  public void testHeadingCreole() {
+    assertEquals(RESULT_HEADING_1, filterCreole.filter("= Test", context));
+  }
+
+  public void testHeadingCreoleWithoutSpace() {
+    assertEquals(RESULT_HEADING_1, filterCreole.filter("=Test", context));
   }
 
   public void testSubHeadings() {
-    assertEquals("<h3 class=\"heading-1\">Test</h3>\n" +
-        "<h3 class=\"heading-1-1\">Test</h3>\n" +
-        "<h3 class=\"heading-1-1-1\">Test</h3>\n" +
-        "<h3 class=\"heading-1\">Test</h3>", filter.filter("1 Test\n1.1 Test\n1.1.1 Test\n1 Test", context));
+    assertEquals(RESULT_SUB_HEADINGS, filter.filter("1 Test\n1.1 Test\n1.1.1 Test\n1 Test", context));
+  }
+
+  public void testSubHeadingsCreole() {
+    assertEquals(RESULT_SUB_HEADINGS, filterCreole.filter("= Test\n== Test\n=== Test\n= Test", context));
+  }
+
+  public void testSubHeadingsCreoleWithoutSpace() {
+    assertEquals(RESULT_SUB_HEADINGS, filterCreole.filter("=Test\n==Test\n===Test\n=Test", context));
   }
 }

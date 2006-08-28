@@ -19,12 +19,13 @@
 
 package org.radeox.filter;
 
+import org.jmock.MockObjectTestCase;
 import org.radeox.engine.context.BaseInitialRenderContext;
 import org.radeox.engine.context.BaseRenderContext;
-import org.radeox.filter.Filter;
 import org.radeox.filter.context.BaseFilterContext;
 import org.radeox.filter.context.FilterContext;
-import org.jmock.MockObjectTestCase;
+
+import java.lang.reflect.Method;
 
 /**
  * Support class for defning JUnit FilterTests.
@@ -35,6 +36,7 @@ import org.jmock.MockObjectTestCase;
 
 public class FilterTestSupport extends MockObjectTestCase {
   protected Filter filter;
+  protected Filter filterCreole;
   protected FilterContext context;
 
   public FilterTestSupport() {
@@ -46,6 +48,15 @@ public class FilterTestSupport extends MockObjectTestCase {
     super.setUp();
     if (null != filter) {
       filter.setInitialContext(new BaseInitialRenderContext());
+    }
+    try {
+      filterCreole = filter.getClass().newInstance();
+      Method setModifierMethod = filterCreole.getClass().getMethod("setModifier", new Class[]{String.class});
+      setModifierMethod.invoke(filterCreole, new Object[]{"Creole"});
+      filterCreole.setInitialContext(new BaseInitialRenderContext());
+//      System.out.println("Added Creole flavour filter: "+filterCreole);
+    } catch (Exception e) {
+      // ignore errors ...
     }
   }
 }

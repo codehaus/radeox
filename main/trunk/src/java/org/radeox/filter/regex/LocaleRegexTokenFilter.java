@@ -34,9 +34,18 @@ import java.util.ResourceBundle;
  * @version $Id: LocaleRegexTokenFilter.java,v 1.5 2003/10/07 08:20:24 stephan Exp $
  */
 
-public abstract class LocaleRegexTokenFilter extends RegexTokenFilter  {
+public abstract class LocaleRegexTokenFilter extends RegexTokenFilter {
   protected ResourceBundle inputMessages;
   protected ResourceBundle outputMessages;
+  private String modifier;
+
+  public void setModifier(String modifier) {
+    this.modifier = modifier;
+  }
+
+  public String getModifier() {
+    return modifier;
+  }
 
   protected boolean isSingleLine() {
     return false;
@@ -60,7 +69,7 @@ public abstract class LocaleRegexTokenFilter extends RegexTokenFilter  {
 
     outputMessages = getOutputBundle();
     inputMessages = getInputBundle();
-    String match = inputMessages.getString(getLocaleKey()+".match");
+    String match = inputMessages.getString(getLocaleKey() + (modifier != null ? "." + modifier : "") + ".match");
     addRegex(match, "", isSingleLine() ? RegexReplaceFilter.SINGLELINE : RegexReplaceFilter.MULTILINE);
   }
 
