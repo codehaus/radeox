@@ -28,18 +28,22 @@ public class ListFilterTest extends FilterTestSupport {
   private static final String RESULT_ORDERED = "<ol>\n<li>test</li>\n<li>test</li>\n<li>test</li>\n</ol>";
   private static final String RESULT_NESTED_SIMPLE = "<ul class=\"minus\">\n" +
           "<li>test</li>\n" +
+          "<li>\n" +
           "<ul class=\"minus\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
           "</ul>\n" +
+          "</li>\n" +
           "<li>test</li>\n" +
           "</ul>";
   private static final String RESULT_NESTED_LIST = "<ul class=\"minus\">\n" +
           "<li>test</li>\n" +
+          "<li>\n" +
           "<ol class=\"alpha\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
           "</ol>\n" +
+          "</li>\n" +
           "<li>test</li>\n" +
           "</ul>";
 

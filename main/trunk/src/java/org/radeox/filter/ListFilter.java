@@ -137,10 +137,18 @@ public class ListFilter extends LocaleRegexTokenFilter implements CacheFilter {
       for (int i = sharedPrefixEnd; i < lastBullet.length; i++) {
         //Logger.log("closing " + lastBullet[i]);
         buffer.append(closeList.get(new Character(lastBullet[i]))).append("\n");
+	if(sharedPrefixEnd > 0)
+        {
+            buffer.append("</li>\n");
+        }
       }
 
       for (int i = sharedPrefixEnd; i < bullet.length; i++) {
         //Logger.log("opening " + bullet[i]);
+	if(sharedPrefixEnd > 0)
+        {
+            buffer.append("<li>\n");
+        }
         buffer.append(openList.get(new Character(bullet[i]))).append("\n");
       }
       buffer.append("<li>");
