@@ -27,21 +27,22 @@ public class ListFilterTest extends FilterTestSupport {
   private static final String RESULT_UNNUMBERED_2 = "<ul class=\"minus\">\n<li>test</li>\n<li>test</li>\n</ul>";
   private static final String RESULT_ORDERED = "<ol>\n<li>test</li>\n<li>test</li>\n<li>test</li>\n</ol>";
   private static final String RESULT_NESTED_SIMPLE = "<ul class=\"minus\">\n" +
-          "<li>test</li>\n" +
-          "<li>\n" +
+          "<li>test\n" +
           "<ul class=\"minus\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
           "</ul>\n" +
           "</li>\n" +
-          "<li>test</li>\n" +
           "</ul>";
   private static final String RESULT_NESTED_LIST = "<ul class=\"minus\">\n" +
-          "<li>test</li>\n" +
+          "<li>test\n" +
+          "<ol class=\"alpha\">\n" +
           "<li>\n" +
           "<ol class=\"alpha\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
+          "</ol>\n" +
+          "</li>\n" +
           "</ol>\n" +
           "</li>\n" +
           "<li>test</li>\n" +
@@ -94,15 +95,15 @@ public class ListFilterTest extends FilterTestSupport {
   }
 
   public void testSimpleNestedList() {
-    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test\r\n- test", context));
+    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test", context));
   }
 
   public void testSimpleNestedListCreole() {
-    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test\r\n- test", context));
+    assertEquals(RESULT_NESTED_SIMPLE, filterCreole.filter("- test\r\n-- test\r\n-- test", context));
   }
 
   public void testNestedList() {
-    assertEquals(RESULT_NESTED_LIST, filter.filter("- test\n-a. test\n-a. test\n- test", context));
+    assertEquals(RESULT_NESTED_LIST, filter.filter("- test\n-aa. test\n-aa. test\n- test", context));
   }
 
   public void testSequentialLists() {
