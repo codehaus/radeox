@@ -1,10 +1,10 @@
 package org.radeox.filter;
 
 /*
- *      Copyright 2001-2004 Fraunhofer Gesellschaft, Munich, Germany, for its 
+ *      Copyright 2001-2004 Fraunhofer Gesellschaft, Munich, Germany, for its
  *      Fraunhofer Institute Computer Architecture and Software Technology
  *      (FIRST), Berlin, Germany
- *      
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -27,23 +27,29 @@ public class ListFilterTest extends FilterTestSupport {
   private static final String RESULT_UNNUMBERED_2 = "<ul class=\"minus\">\n<li>test</li>\n<li>test</li>\n</ul>";
   private static final String RESULT_ORDERED = "<ol>\n<li>test</li>\n<li>test</li>\n<li>test</li>\n</ol>";
   private static final String RESULT_NESTED_SIMPLE = "<ul class=\"minus\">\n" +
-          "<li>test</li>\n" +
+          "<li>test\n" +
           "<ul class=\"minus\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
           "</ul>\n" +
-          "<li>test</li>\n" +
+          "</li>\n" +
           "</ul>";
   private static final String RESULT_NESTED_LIST = "<ul class=\"minus\">\n" +
-          "<li>test</li>\n" +
+          "<li>test\n" +
+          "<ol class=\"alpha\">\n" +
+          "<li>\n" +
           "<ol class=\"alpha\">\n" +
           "<li>test</li>\n" +
           "<li>test</li>\n" +
           "</ol>\n" +
+          "</li>\n" +
+          "</ol>\n" +
+          "</li>\n" +
           "<li>test</li>\n" +
           "</ul>";
 
-  protected void setUp() throws Exception {
+  @Override
+protected void setUp() throws Exception {
     filter = new ListFilter();
 //    context.getRenderContext().setRenderEngine((RenderEngine)
 //        new MockWikiRenderEngine()
@@ -59,6 +65,8 @@ public class ListFilterTest extends FilterTestSupport {
     assertEquals("<ul class=\"minus\">\n" +
             "<li>test</li>\n" +
             "<li>test</li>\n" +
+            "</ul>-----\n" +
+            "<ul class=\"minus\">\n" +
             "<li>test</li>\n" +
             "</ul>", filter.filter("- test\n- test\n\n-----\n\n- test", context));
   }
@@ -90,15 +98,15 @@ public class ListFilterTest extends FilterTestSupport {
   }
 
   public void testSimpleNestedList() {
-    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test\r\n- test", context));
+    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test", context));
   }
 
   public void testSimpleNestedListCreole() {
-    assertEquals(RESULT_NESTED_SIMPLE, filter.filter("- test\r\n-- test\r\n-- test\r\n- test", context));
+    assertEquals(RESULT_NESTED_SIMPLE, filterCreole.filter("- test\r\n-- test\r\n-- test", context));
   }
 
   public void testNestedList() {
-    assertEquals(RESULT_NESTED_LIST, filter.filter("- test\n-a. test\n-a. test\n- test", context));
+    assertEquals(RESULT_NESTED_LIST, filter.filter("- test\n-aa. test\n-aa. test\n- test", context));
   }
 
   public void testSequentialLists() {
@@ -117,4 +125,22 @@ public class ListFilterTest extends FilterTestSupport {
             "<li>[test test2]</li>\n" +
             "</ul>", filter.filter("- [test]\n- [test1]\n- [test test2]\n", context));
   }
+
+  public void testWrongListFormat() {
+      final String markup = "paragraph01\r\n"+
+          "\r\n" +
+          // wrong list element mark (no content)
+          "--- \n" +
+          "\r\n" +
+          "paragraph02\r\n" +
+          "\r\n" +
+          // wrong list element mark (no space and no content)
+          "---\n" +
+          "\r\n" +
+          "paragraph03\r\n";
+    final String out = filter.filter(markup, context);
+    // output should be the same as input
+    assertEquals(markup, out);
+  }
+
 }

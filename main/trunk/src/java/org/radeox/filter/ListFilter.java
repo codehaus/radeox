@@ -46,6 +46,9 @@ public class ListFilter extends LocaleRegexTokenFilter implements CacheFilter {
   private final static Map openList = new HashMap();
   private final static Map closeList = new HashMap();
 
+  private static final String NEWLINE = "\n";
+  private static final String LI_OPEN = "<li>";
+  private static final String LI_CLOSE = "</li>";
   private static final String UL_CLOSE = "</ul>";
   private static final String OL_CLOSE = "</ol>";
 
@@ -136,22 +139,38 @@ public class ListFilter extends LocaleRegexTokenFilter implements CacheFilter {
 
       for (int i = sharedPrefixEnd; i < lastBullet.length; i++) {
         //Logger.log("closing " + lastBullet[i]);
+        buffer.append(LI_CLOSE + NEWLINE);
         buffer.append(closeList.get(new Character(lastBullet[i]))).append("\n");
       }
 
       for (int i = sharedPrefixEnd; i < bullet.length; i++) {
         //Logger.log("opening " + bullet[i]);
+        if(i > 0)
+        {
+          buffer.append(NEWLINE);
+        }
         buffer.append(openList.get(new Character(bullet[i]))).append("\n");
+        buffer.append(LI_OPEN);
       }
-      buffer.append("<li>");
+
+      if(lastBullet.length >= bullet.length)
+      {
+        buffer.append(LI_CLOSE + NEWLINE);
+        buffer.append(LI_OPEN);
+      }
+
       buffer.append(line.substring(line.indexOf(' ') + 1));
-      buffer.append("</li>\n");
       lastBullet = bullet;
     }
 
     for (int i = lastBullet.length - 1; i >= 0; i--) {
       //Logger.log("closing " + lastBullet[i]);
+      buffer.append(LI_CLOSE + NEWLINE);
       buffer.append(closeList.get(new Character(lastBullet[i])));
+      if(i > 0)
+      {
+          buffer.append(NEWLINE);
+      }
     }
   }
 }
